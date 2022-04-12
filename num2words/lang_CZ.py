@@ -20,78 +20,145 @@ from __future__ import unicode_literals
 from .base import Num2Word_Base
 from .utils import get_digits, splitbyx
 
-ZERO = ('nula',)
+ZERO = ("nula",)
 
 ONES = {
-    1: ('jedna',),
-    2: ('dva',),
-    3: ('tři',),
-    4: ('čtyři',),
-    5: ('pět',),
-    6: ('šest',),
-    7: ('sedm',),
-    8: ('osm',),
-    9: ('devět',),
+    1: ("jedna",),
+    2: ("dva",),
+    3: ("tři",),
+    4: ("čtyři",),
+    5: ("pět",),
+    6: ("šest",),
+    7: ("sedm",),
+    8: ("osm",),
+    9: ("devět",),
 }
 
 TENS = {
-    0: ('deset',),
-    1: ('jedenáct',),
-    2: ('dvanáct',),
-    3: ('třináct',),
-    4: ('čtrnáct',),
-    5: ('patnáct',),
-    6: ('šestnáct',),
-    7: ('sedmnáct',),
-    8: ('osmnáct',),
-    9: ('devatenáct',),
+    0: ("deset",),
+    1: ("jedenáct",),
+    2: ("dvanáct",),
+    3: ("třináct",),
+    4: ("čtrnáct",),
+    5: ("patnáct",),
+    6: ("šestnáct",),
+    7: ("sedmnáct",),
+    8: ("osmnáct",),
+    9: ("devatenáct",),
 }
 
 TWENTIES = {
-    2: ('dvacet',),
-    3: ('třicet',),
-    4: ('čtyřicet',),
-    5: ('padesát',),
-    6: ('šedesát',),
-    7: ('sedmdesát',),
-    8: ('osmdesát',),
-    9: ('devadesát',),
+    2: ("dvacet",),
+    3: ("třicet",),
+    4: ("čtyřicet",),
+    5: ("padesát",),
+    6: ("šedesát",),
+    7: ("sedmdesát",),
+    8: ("osmdesát",),
+    9: ("devadesát",),
 }
 
 HUNDREDS = {
-    1: ('sto',),
-    2: ('dvěstě',),
-    3: ('třista',),
-    4: ('čtyřista',),
-    5: ('pětset',),
-    6: ('šestset',),
-    7: ('sedmset',),
-    8: ('osmset',),
-    9: ('devětset',),
+    1: ("sto",),
+    2: ("dvěstě",),
+    3: ("třista",),
+    4: ("čtyřista",),
+    5: ("pětset",),
+    6: ("šestset",),
+    7: ("sedmset",),
+    8: ("osmset",),
+    9: ("devětset",),
 }
 
 THOUSANDS = {
-    1: ('tisíc', 'tisíce', 'tisíc'),  # 10^3
-    2: ('milion', 'miliony', 'milionů'),  # 10^6
-    3: ('miliarda', 'miliardy', 'miliard'),  # 10^9
-    4: ('bilion', 'biliony', 'bilionů'),  # 10^12
-    5: ('biliarda', 'biliardy', 'biliard'),  # 10^15
-    6: ('trilion', 'triliony', 'trilionů'),  # 10^18
-    7: ('triliarda', 'triliardy', 'triliard'),  # 10^21
-    8: ('kvadrilion', 'kvadriliony', 'kvadrilionů'),  # 10^24
-    9: ('kvadriliarda', 'kvadriliardy', 'kvadriliard'),  # 10^27
-    10: ('quintillion', 'quintilliony', 'quintillionů'),  # 10^30
+    1: ("tisíc", "tisíce", "tisíc"),  # 10^3
+    2: ("milion", "miliony", "milionů"),  # 10^6
+    3: ("miliarda", "miliardy", "miliard"),  # 10^9
+    4: ("bilion", "biliony", "bilionů"),  # 10^12
+    5: ("biliarda", "biliardy", "biliard"),  # 10^15
+    6: ("trilion", "triliony", "trilionů"),  # 10^18
+    7: ("triliarda", "triliardy", "triliard"),  # 10^21
+    8: ("kvadrilion", "kvadriliony", "kvadrilionů"),  # 10^24
+    9: ("kvadriliarda", "kvadriliardy", "kvadriliard"),  # 10^27
+    10: ("quintillion", "quintilliony", "quintillionů"),  # 10^30
 }
+
+
+ZERO_ORDINAL = "nultý"
+
+ORDINAL_FORM = 0
+COMPOUNDED_FORM = 1
+
+# (ORDINAL_FORM, COMPOUNDED_FORM)
+ONES_ORDINALS = {
+    1: ("první", "-"),
+    2: ("druhý", "dvou"),
+    3: ("třetí", "tří"),
+    4: ("čtvrtý", "čtyr"),
+    5: ("pátý", "pěti"),
+    6: ("šestý", "šesti"),
+    7: ("sedmý", "siedmio"),
+    8: ("osmý", "osmi"),
+    9: ("devátý", "devíti"),
+    10: ("desátý", "deseti"),
+    11: ("jedenáctý", "jedenácti"),
+    12: ("dvanáctý", "dvanácti"),
+    13: ("třináctý", "třinácti"),
+    14: ("čtrnáctý", "čtrnácti"),
+    15: ("patnáctý", "patnácti"),
+    16: ("šestnáctý", "šestnácti"),
+    17: ("sedmnáctý", "sedmnácti"),
+    18: ("osmnáctý", "osmnácti"),
+    19: ("devatenáctý", "devatenácti"),
+}
+
+# (ORDINAL_FORM, COMPOUNDED_FORM)
+TWENTIES_ORDINALS = {
+    2: ("dvacátý", "dvaceti"),
+    3: ("třicátý", "třiceti"),
+    4: ("čtyřicátý", "čtyřiceti"),
+    5: ("padesátý", "padeseti"),
+    6: ("šedesátý", "šedeseti"),
+    7: ("sedmdesátý", "sedmdeseti"),
+    8: ("osmdesátý", "osmdeseti"),
+    9: ("devadesátý", "devadeseti"),
+}
+
+# (ORDINAL_FORM, COMPOUNDED_FORM)
+HUNDREDS_ORDINALS = {
+    1: ("stý", "sto"),
+    2: ("dvoustý", "dvousti"),
+    3: ("třistý", "třisti"),
+    4: ("čtyřstý", "čtyřsti"),
+    5: ("pětistý", "pětisti"),
+    6: ("šestistý", "šestisti"),
+    7: ("sedmistý", "sedmisti"),
+    8: ("osmistý", "osmisti"),
+    9: ("devítistý", "devítisti"),
+}
+
+# TODO optimize
+# NOTE prefixes_ordinal is not a good name really
+high_numwords = {
+    1: "tisící",  # 10^3
+    2: "miliontý",  # 10^6
+    3: "miliardtý",  # 10^9
+    4: "biliontý",  # 10^12
+    5: "biliardtý",  # 10^15
+    6: "triliontý",  # 10^18
+    7: "triliardtý",  # 10^21
+}
+
+
+# do not use ordinal forms of these numbers when combining with higher order numerals.
+# e.g. pátý tisící is fine but not druhý tisící, instead use dvou tisící
+NUMERALS_TO_COMPOUND_WITH_HIGH_NUMBERS = (2, 3, 4)
 
 
 class Num2Word_CZ(Num2Word_Base):
     CURRENCY_FORMS = {
-        'CZK': (
-            ('koruna', 'koruny', 'korun'), ('halíř', 'halíře', 'haléřů')
-        ),
-        'EUR': (
-            ('euro', 'euro', 'euro'), ('cent', 'centy', 'centů')
-        ),
+        "CZK": (("koruna", "koruny", "korun"), ("halíř", "halíře", "haléřů")),
+        "EUR": (("euro", "euro", "euro"), ("cent", "centy", "centů")),
     }
 
     def setup(self):
@@ -99,16 +166,17 @@ class Num2Word_CZ(Num2Word_Base):
         self.pointword = "celá"
 
     def to_cardinal(self, number):
-        n = str(number).replace(',', '.')
-        if '.' in n:
-            left, right = n.split('.')
-            leading_zero_count = len(right) - len(right.lstrip('0'))
-            decimal_part = ((ZERO[0] + ' ') * leading_zero_count +
-                            self._int2word(int(right)))
-            return u'%s %s %s' % (
+        n = str(number).replace(",", ".")
+        if "." in n:
+            left, right = n.split(".")
+            leading_zero_count = len(right) - len(right.lstrip("0"))
+            decimal_part = (ZERO[0] + " ") * leading_zero_count + self._int2word(
+                int(right)
+            )
+            return "%s %s %s" % (
                 self._int2word(int(left)),
                 self.pointword,
-                decimal_part
+                decimal_part,
             )
         else:
             return self._int2word(int(n))
@@ -122,8 +190,66 @@ class Num2Word_CZ(Num2Word_Base):
             form = 2
         return forms[form]
 
+    # We try to keep the ordinals' structure as consistent as possible.
+    # Since the 0-999 are mostly represented in separate ordinals form we try to extend the same logic to higher order numbers.
+    # Thus for 20,000 we choose dvacátý tisící, not dvacetitisící.
+    # Yet this approach is explicitly wrong for 2,3 and 4 which always require the compounded form (dvou tisící, not druhý tisící).
     def to_ordinal(self, number):
-        raise NotImplementedError()
+        self.verify_ordinal(number)
+
+        if number == 0:
+            return ZERO_ORDINAL
+
+        words = []
+        fragments = list(splitbyx(str(number), 3))
+
+        for i, fragment in enumerate(fragments):
+            level = len(fragments) - i - 1
+            self._fragment_to_ordinal(fragment, words, level=level)
+            if level > 0 and fragment != 0:
+                words.append(high_numwords[level])
+
+        output = " ".join(words)
+
+        return output
+
+    # process numbers 1-999
+    def _fragment_to_ordinal(self, last, words, level):
+        n1, n2, n3 = get_digits(last)
+        last_two = n2 * 10 + n1
+
+        if n3 > 0:
+            words.append(HUNDREDS_ORDINALS[n3][ORDINAL_FORM])
+
+        if last_two == 0:
+            return
+        elif level > 0 and last == 1:  # 1000 gives thousandth, not one thousandth
+            return
+        elif last_two < 20:  # ones and teens
+            if level == 0:
+                form = ORDINAL_FORM
+            else:
+                form = (
+                    COMPOUNDED_FORM
+                    if last_two in NUMERALS_TO_COMPOUND_WITH_HIGH_NUMBERS
+                    else ORDINAL_FORM
+                )
+
+            words.append(ONES_ORDINALS[last_two][form])
+        elif n1 == 0:  # twenties
+            words.append(TWENTIES_ORDINALS[n2][ORDINAL_FORM])
+        else:  # twenties + ones
+            if level == 0:
+                form = ORDINAL_FORM
+            else:
+                form = (
+                    COMPOUNDED_FORM
+                    if n1 in NUMERALS_TO_COMPOUND_WITH_HIGH_NUMBERS
+                    else ORDINAL_FORM
+                )
+
+            words.append(TWENTIES_ORDINALS[n2][ORDINAL_FORM])
+            words.append(ONES_ORDINALS[n1][form])
 
     def _int2word(self, n):
         if n == 0:
@@ -154,4 +280,4 @@ class Num2Word_CZ(Num2Word_Base):
             if i > 0:
                 words.append(self.pluralize(x, THOUSANDS[i]))
 
-        return ' '.join(words)
+        return " ".join(words)
