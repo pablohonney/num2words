@@ -137,17 +137,13 @@ HUNDREDS_ORDINALS = {
     9: ("devítistý", "devítisti"),
 }
 
-# TODO optimize
-# NOTE prefixes_ordinal is not a good name really
-high_numwords = {
+THOUSANDS_ORDINALS = {
     1: "tisící",  # 10^3
-    2: "miliontý",  # 10^6
-    3: "miliardtý",  # 10^9
-    4: "biliontý",  # 10^12
-    5: "biliardtý",  # 10^15
-    6: "triliontý",  # 10^18
-    7: "triliardtý",  # 10^21
 }
+
+for level_, thousand_ in THOUSANDS.items():
+    if level_ not in THOUSANDS_ORDINALS:
+        THOUSANDS_ORDINALS[level_] = thousand_[0].rstrip('a') + 'tý'
 
 
 # do not use ordinal forms of these numbers when combining with higher order numerals.
@@ -207,7 +203,7 @@ class Num2Word_CZ(Num2Word_Base):
             level = len(fragments) - i - 1
             self._fragment_to_ordinal(fragment, words, level=level)
             if level > 0 and fragment != 0:
-                words.append(high_numwords[level])
+                words.append(THOUSANDS_ORDINALS[level])
 
         output = " ".join(words)
 
