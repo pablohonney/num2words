@@ -84,7 +84,7 @@ THOUSANDS = {
 }
 
 
-ZERO_ORDINAL = "nultý"
+ZERO_ORDINAL = ("nultý",)
 
 ORDINAL_FORM = 0
 COMPOUNDED_FORM = 1
@@ -194,7 +194,7 @@ class Num2Word_CZ(Num2Word_Base):
         self.verify_ordinal(number)
 
         if number == 0:
-            return ZERO_ORDINAL
+            return ZERO_ORDINAL[0]
 
         words = []
         fragments = list(splitbyx(str(number), 3))
