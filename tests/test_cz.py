@@ -58,54 +58,87 @@ TEST_CASES_CARDINAL = (
     ),
 )
 
-TEST_CASES_ORDINAL = (
-    # ones
-    (0, "nultý"),
-    (3, "třetí"),
-    (5, "pátý"),
-    # teens
-    (15, "patnáctý"),
-    # tens
-    (10, "desátý"),
-    (20, "dvacátý"),
-    (25, "dvacátý pátý"),
-    # hundreds
-    (100, "stý"),
-    (105, "stý pátý"),  # hundreds + ones
-    (110, "stý desátý"),  # hundreds + tens
-    (115, "stý patnáctý"),  # hundreds + teens
-    (120, "stý dvacátý"),  # hundreds + tens
-    (125, "stý dvacátý pátý"),  # hundreds + tens + ones
-    (200, "dvoustý"),
-    (225, "dvoustý dvacátý pátý"),
-    # thousands
-    (1000, "tisící"),
-    (1005, "tisící pátý"),
-    (1010, "tisící desátý"),
-    (1015, "tisící patnáctý"),
-    (1020, "tisící dvacátý"),
-    (1025, "tisící dvacátý pátý"),
-    (1100, "tisící stý"),
-    (1200, "tisící dvoustý"),
-    (2000, "dvou tisící"),
-    (5000, "pátý tisící"),
-    (10000, "desátý tisící"),
-    (13000, "třináctý tisící"),
-    (20000, "dvacátý tisící"),
-    (100000, "stý tisící"),
-    (200000, "dvoustý tisící"),
-    (223000, "dvoustý dvacátý tří tisící"),
-    # millions
+
+# Numbers and number fragments under thousand form open composites, each component is ordinal
+TEST_CASES_ORDINAL_UNDER_THOUSAND = (
+    # 0-99
+    (0, "nultý"),  # ones, base case
+    (1, "první"),  # ones
+    (11, "jedenáctý"),  # teens
+    (20, "dvacátý"),  # twenties
+    (21, "dvacátý první"),  # twenties + ones
+    # 100-199
+    (100, "stý"),  # hundred
+    (101, "stý první"),  # hundred + ones
+    (111, "stý jedenáctý"),  # hundred + teens
+    (120, "stý dvacátý"),  # hundred + twenties
+    (121, "stý dvacátý první"),  # hundred + twenties + ones
+    # 200-999
+    (200, "dvoustý"),  # hundreds
+    (201, "dvoustý první"),  # hundreds + ones
+    (211, "dvoustý jedenáctý"),  # hundreds + teens
+    (220, "dvoustý dvacátý"),  # hundreds + twenties
+    (221, "dvoustý dvacátý první"),  # hundreds + twenties + ones
+)
+
+# Numbers and number fragments under thousand freely combine with higher-level fragments, no interference
+TEST_CASES_ORDINAL_1XXX = (
+    # 1-99
+    (1001, "tisící první"),  # thousand + ones
+    (1011, "tisící jedenáctý"),  # thousand + teens
+    (1020, "tisící dvacátý"),  # thousand + twenties
+    (1021, "tisící dvacátý první"),  # thousand + twenties + ones
+    # 100-199
+    (1100, "tisící stý"),  # thousand + hundred
+    (1101, "tisící stý první"),  # thousand + hundred + ones
+    (1111, "tisící stý jedenáctý"),  # thousand + hundred + teens
+    (1120, "tisící stý dvacátý"),  # thousand + hundred + twenties
+    (1121, "tisící stý dvacátý první"),  # thousand + hundred + twenties + ones
+    # 200-999
+    (1200, "tisící dvoustý"),  # thousand + hundreds
+    (1201, "tisící dvoustý první"),  # thousand + hundreds + ones
+    (1211, "tisící dvoustý jedenáctý"),  # thousand + hundreds + teens
+    (1220, "tisící dvoustý dvacátý"),  # thousand + hundreds + twenties
+    (1221, "tisící dvoustý dvacátý první"),  # thousand + hundreds + twenties + ones
+)
+
+
+# Number fragments over thousands form open composites, each component is ordinal
+TEST_CASES_ORDINAL_XXX000 = (
+    (1 * 1000, "tisící"),  # ones
+    (2 * 1000, "dvou tisící"),  # ones
+    (5 * 1000, "pěti tisící"),  # ones
+    (11 * 1000, "jedenácti tisící"),  # teens
+    (20 * 1000, "dvaceti tisící"),  # twenties
+    (21 * 1000, "dvaceti jeden tisící"),  # twenties + ones
+    # 100-199
+    (100 * 1000, "sto tisící"),  # hundred
+    (101 * 1000, "sto jeden tisící"),  # hundred + ones
+    (111 * 1000, "sto jedenácti tisící"),  # hundred + teens
+    (120 * 1000, "sto dvaceti tisící"),  # hundred + twenties
+    (121 * 1000, "sto dvaceti jeden tisící"),  # hundred + twenties + ones
+    # 200-999
+    (200 * 1000, "dvousti tisící"),  # hundreds
+    (201 * 1000, "dvousti jeden tisící"),  # hundreds + ones
+    (211 * 1000, "dvousti jedenácti tisící"),  # hundreds + teens
+    (220 * 1000, "dvousti dvaceti tisící"),  # hundreds + twenties
+    (221 * 1000, "dvousti dvaceti jeden tisící"),  # hundreds + twenties + ones
+)
+
+
+TEST_CASES_ORDINAL_MILLIONS = (
     (10**6, "miliontý"),
-    (100 * 10**6, "stý miliontý"),
-    (223 * 10**6, "dvoustý dvacátý tří miliontý"),
-    (10**6 + 21, "miliontý dvacátý první"),
-    (10**6 + 1000, "miliontý tisící"),
-    (10**6 + 2000, "miliontý dvou tisící"),
+    (100 * 10**6, "sto miliontý"),
+    (223 * 10**6, "dvousti dvaceti tří miliontý"),
     # higher orders
     (10**9, "miliardtý"),
     (10**12, "biliontý"),
 )
+
+TEST_CASES_ORDINAL = TEST_CASES_ORDINAL_UNDER_THOUSAND + \
+                     TEST_CASES_ORDINAL_1XXX + \
+                     TEST_CASES_ORDINAL_XXX000 + \
+                     TEST_CASES_ORDINAL_MILLIONS
 
 
 class Num2WordsCZTest(TestCase):

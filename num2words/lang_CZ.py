@@ -91,7 +91,7 @@ COMPOUNDED_FORM = 1
 
 # (ORDINAL_FORM, COMPOUNDED_FORM)
 ONES_ORDINALS = {
-    1: ("první", "-"),
+    1: ("první", "jeden"),
     2: ("druhý", "dvou"),
     3: ("třetí", "tří"),
     4: ("čtvrtý", "čtyr"),
@@ -144,11 +144,6 @@ THOUSANDS_ORDINALS = {
 for level_, thousand_ in THOUSANDS.items():
     if level_ not in THOUSANDS_ORDINALS:
         THOUSANDS_ORDINALS[level_] = thousand_[0].rstrip('a') + 'tý'
-
-
-# do not use ordinal forms of these numbers when combining with higher order numerals.
-# e.g. pátý tisící is fine but not druhý tisící, instead use dvou tisící
-NUMERALS_TO_COMPOUND_WITH_HIGH_NUMBERS = (2, 3, 4)
 
 
 class Num2Word_CZ(Num2Word_Base):
@@ -209,42 +204,26 @@ class Num2Word_CZ(Num2Word_Base):
 
         return output
 
-    # process numbers 1-999
+    # process fragments of 1-999
     def _fragment_to_ordinal(self, last, words, level):
         n1, n2, n3 = get_digits(last)
         last_two = n2 * 10 + n1
 
+        form = ORDINAL_FORM if level == 0 else COMPOUNDED_FORM
+
         if n3 > 0:
-            words.append(HUNDREDS_ORDINALS[n3][ORDINAL_FORM])
+            words.append(HUNDREDS_ORDINALS[n3][form])
 
         if last_two == 0:
             return
         elif level > 0 and last == 1:  # 1000 gives thousandth, not one thousandth
             return
         elif last_two < 20:  # ones and teens
-            if level == 0:
-                form = ORDINAL_FORM
-            else:
-                form = (
-                    COMPOUNDED_FORM
-                    if last_two in NUMERALS_TO_COMPOUND_WITH_HIGH_NUMBERS
-                    else ORDINAL_FORM
-                )
-
             words.append(ONES_ORDINALS[last_two][form])
         elif n1 == 0:  # twenties
-            words.append(TWENTIES_ORDINALS[n2][ORDINAL_FORM])
+            words.append(TWENTIES_ORDINALS[n2][form])
         else:  # twenties + ones
-            if level == 0:
-                form = ORDINAL_FORM
-            else:
-                form = (
-                    COMPOUNDED_FORM
-                    if n1 in NUMERALS_TO_COMPOUND_WITH_HIGH_NUMBERS
-                    else ORDINAL_FORM
-                )
-
-            words.append(TWENTIES_ORDINALS[n2][ORDINAL_FORM])
+            words.append(TWENTIES_ORDINALS[n2][form])
             words.append(ONES_ORDINALS[n1][form])
 
     def _int2word(self, n):
