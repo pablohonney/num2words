@@ -143,7 +143,7 @@ THOUSANDS_ORDINALS = {
 
 for level_, thousand_ in THOUSANDS.items():
     if level_ not in THOUSANDS_ORDINALS:
-        THOUSANDS_ORDINALS[level_] = thousand_[0].rstrip('a') + 'tý'
+        THOUSANDS_ORDINALS[level_] = thousand_[0].rstrip("a") + "tý"
 
 
 class Num2Word_CZ(Num2Word_Base):
@@ -199,7 +199,7 @@ class Num2Word_CZ(Num2Word_Base):
             fragment_words = self._fragment_to_ordinal(fragment, level=level)
             if level > 0 and fragment != 0:
                 fragment_words.append(THOUSANDS_ORDINALS[level])
-                words.append(''.join(fragment_words))
+                words.append("".join(fragment_words))
             else:
                 words.extend(fragment_words)
 
