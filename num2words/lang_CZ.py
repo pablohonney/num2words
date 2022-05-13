@@ -196,16 +196,21 @@ class Num2Word_CZ(Num2Word_Base):
 
         for i, fragment in enumerate(fragments):
             level = len(fragments) - i - 1
-            self._fragment_to_ordinal(fragment, words, level=level)
+            fragment_words = self._fragment_to_ordinal(fragment, level=level)
             if level > 0 and fragment != 0:
-                words.append(THOUSANDS_ORDINALS[level])
+                fragment_words.append(THOUSANDS_ORDINALS[level])
+                words.append(''.join(fragment_words))
+            else:
+                words.extend(fragment_words)
 
         output = " ".join(words)
 
         return output
 
     # process fragments of 1-999
-    def _fragment_to_ordinal(self, last, words, level):
+    def _fragment_to_ordinal(self, last, level):
+        words = []
+
         n1, n2, n3 = get_digits(last)
         last_two = n2 * 10 + n1
 
@@ -215,9 +220,9 @@ class Num2Word_CZ(Num2Word_Base):
             words.append(HUNDREDS_ORDINALS[n3][form])
 
         if last_two == 0:
-            return
+            return words
         elif level > 0 and last == 1:  # 1000 gives thousandth, not one thousandth
-            return
+            return words
         elif last_two < 20:  # ones and teens
             words.append(ONES_ORDINALS[last_two][form])
         elif n1 == 0:  # twenties
@@ -225,6 +230,8 @@ class Num2Word_CZ(Num2Word_Base):
         else:  # twenties + ones
             words.append(TWENTIES_ORDINALS[n2][form])
             words.append(ONES_ORDINALS[n1][form])
+
+        return words
 
     def _int2word(self, n):
         if n == 0:

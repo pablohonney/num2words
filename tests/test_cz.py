@@ -106,30 +106,30 @@ TEST_CASES_ORDINAL_1XXX = (
 # Number fragments over thousands form open composites, each component is ordinal
 TEST_CASES_ORDINAL_XXX000 = (
     (1 * 1000, "tisící"),  # ones
-    (2 * 1000, "dvou tisící"),  # ones
-    (5 * 1000, "pěti tisící"),  # ones
-    (11 * 1000, "jedenácti tisící"),  # teens
-    (20 * 1000, "dvaceti tisící"),  # twenties
-    (21 * 1000, "dvaceti jeden tisící"),  # twenties + ones
+    (2 * 1000, "dvoutisící"),  # ones
+    (5 * 1000, "pětitisící"),  # ones
+    (11 * 1000, "jedenáctitisící"),  # teens
+    (20 * 1000, "dvacetitisící"),  # twenties
+    (21 * 1000, "dvacetijedentisící"),  # twenties + ones
     # 100-199
-    (100 * 1000, "sto tisící"),  # hundred
-    (101 * 1000, "sto jeden tisící"),  # hundred + ones
-    (111 * 1000, "sto jedenácti tisící"),  # hundred + teens
-    (120 * 1000, "sto dvaceti tisící"),  # hundred + twenties
-    (121 * 1000, "sto dvaceti jeden tisící"),  # hundred + twenties + ones
+    (100 * 1000, "stotisící"),  # hundred
+    (101 * 1000, "stojedentisící"),  # hundred + ones
+    (111 * 1000, "stojedenáctitisící"),  # hundred + teens
+    (120 * 1000, "stodvacetitisící"),  # hundred + twenties
+    (121 * 1000, "stodvacetijedentisící"),  # hundred + twenties + ones
     # 200-999
-    (200 * 1000, "dvousti tisící"),  # hundreds
-    (201 * 1000, "dvousti jeden tisící"),  # hundreds + ones
-    (211 * 1000, "dvousti jedenácti tisící"),  # hundreds + teens
-    (220 * 1000, "dvousti dvaceti tisící"),  # hundreds + twenties
-    (221 * 1000, "dvousti dvaceti jeden tisící"),  # hundreds + twenties + ones
+    (200 * 1000, "dvoustitisící"),  # hundreds
+    (201 * 1000, "dvoustijedentisící"),  # hundreds + ones
+    (211 * 1000, "dvoustijedenáctitisící"),  # hundreds + teens
+    (220 * 1000, "dvoustidvacetitisící"),  # hundreds + twenties
+    (221 * 1000, "dvoustidvacetijedentisící"),  # hundreds + twenties + ones
 )
 
 
 TEST_CASES_ORDINAL_MILLIONS = (
     (10**6, "miliontý"),
-    (100 * 10**6, "sto miliontý"),
-    (223 * 10**6, "dvousti dvaceti tří miliontý"),
+    (100 * 10**6, "stomiliontý"),
+    (223 * 10**6, "dvoustidvacetitřímiliontý"),
     # higher orders
     (10**9, "miliardtý"),
     (10**12, "biliontý"),
