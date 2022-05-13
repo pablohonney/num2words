@@ -127,14 +127,14 @@ TWENTIES_ORDINALS = {
 # (ORDINAL_FORM, COMPOUNDED_FORM)
 HUNDREDS_ORDINALS = {
     1: ("stý", "sto"),
-    2: ("dvoustý", "dvousti"),
-    3: ("třistý", "třisti"),
-    4: ("čtyřstý", "čtyřsti"),
-    5: ("pětistý", "pětisti"),
-    6: ("šestistý", "šestisti"),
-    7: ("sedmistý", "sedmisti"),
-    8: ("osmistý", "osmisti"),
-    9: ("devítistý", "devítisti"),
+    2: ("dvoustý", "dvouset"),
+    3: ("třistý", "třiset"),
+    4: ("čtyřstý", "čtyřset"),
+    5: ("pětistý", "pětiset"),
+    6: ("šestistý", "šestiset"),
+    7: ("sedmistý", "sedmiset"),
+    8: ("osmistý", "osmiset"),
+    9: ("devítistý", "devítiset"),
 }
 
 THOUSANDS_ORDINALS = {

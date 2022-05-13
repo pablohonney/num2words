@@ -118,18 +118,18 @@ TEST_CASES_ORDINAL_XXX000 = (
     (120 * 1000, "stodvacetitisící"),  # hundred + twenties
     (121 * 1000, "stodvacetijedentisící"),  # hundred + twenties + ones
     # 200-999
-    (200 * 1000, "dvoustitisící"),  # hundreds
-    (201 * 1000, "dvoustijedentisící"),  # hundreds + ones
-    (211 * 1000, "dvoustijedenáctitisící"),  # hundreds + teens
-    (220 * 1000, "dvoustidvacetitisící"),  # hundreds + twenties
-    (221 * 1000, "dvoustidvacetijedentisící"),  # hundreds + twenties + ones
+    (200 * 1000, "dvousettisící"),  # hundreds
+    (201 * 1000, "dvousetjedentisící"),  # hundreds + ones
+    (211 * 1000, "dvousetjedenáctitisící"),  # hundreds + teens
+    (220 * 1000, "dvousetdvacetitisící"),  # hundreds + twenties
+    (221 * 1000, "dvousetdvacetijedentisící"),  # hundreds + twenties + ones
 )
 
 
 TEST_CASES_ORDINAL_MILLIONS = (
     (10**6, "miliontý"),
     (100 * 10**6, "stomiliontý"),
-    (223 * 10**6, "dvoustidvacetitřímiliontý"),
+    (223 * 10**6, "dvousetdvacetitřímiliontý"),
     # higher orders
     (10**9, "miliardtý"),
     (10**12, "biliontý"),
