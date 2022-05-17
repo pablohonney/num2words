@@ -82,24 +82,40 @@ TEST_CASES_ORDINAL_UNDER_THOUSAND = (
 )
 
 # Numbers and number fragments under thousand freely combine with higher-level fragments, no interference
-TEST_CASES_ORDINAL_1XXX = (
+TEST_CASES_ORDINAL_2XXX = (
     # 1-99
     (1001, "tisící první"),  # thousand + ones
     (1011, "tisící jedenáctý"),  # thousand + teens
     (1020, "tisící dvacátý"),  # thousand + twenties
     (1021, "tisící dvacátý první"),  # thousand + twenties + ones
     # 100-199
-    (1100, "tisící stý"),  # thousand + hundred
-    (1101, "tisící stý první"),  # thousand + hundred + ones
-    (1111, "tisící stý jedenáctý"),  # thousand + hundred + teens
-    (1120, "tisící stý dvacátý"),  # thousand + hundred + twenties
-    (1121, "tisící stý dvacátý první"),  # thousand + hundred + twenties + ones
+    (2100, "dvoutisící stý"),  # thousand + hundred
+    (2101, "dvoutisící stý první"),  # thousand + hundred + ones
+    (2111, "dvoutisící stý jedenáctý"),  # thousand + hundred + teens
+    (2120, "dvoutisící stý dvacátý"),  # thousand + hundred + twenties
+    (2121, "dvoutisící stý dvacátý první"),  # thousand + hundred + twenties + ones
     # 200-999
-    (1200, "tisící dvoustý"),  # thousand + hundreds
-    (1201, "tisící dvoustý první"),  # thousand + hundreds + ones
-    (1211, "tisící dvoustý jedenáctý"),  # thousand + hundreds + teens
-    (1220, "tisící dvoustý dvacátý"),  # thousand + hundreds + twenties
-    (1221, "tisící dvoustý dvacátý první"),  # thousand + hundreds + twenties + ones
+    (2200, "dvoutisící dvoustý"),  # thousand + hundreds
+    (2201, "dvoutisící dvoustý první"),  # thousand + hundreds + ones
+    (2211, "dvoutisící dvoustý jedenáctý"),  # thousand + hundreds + teens
+    (2220, "dvoutisící dvoustý dvacátý"),  # thousand + hundreds + twenties
+    (2221, "dvoutisící dvoustý dvacátý první"),  # thousand + hundreds + twenties + ones
+)
+
+
+TEST_CASES_ORDINAL_001XXX_FRAGMENT_INTERFERENCE = (
+    # 100-199
+    (1100, "jedenáctistý"),  # thousand + hundred, instead of 'tisící stý'
+    (1101, "jedenáctistý první"),  # thousand + hundred + ones, instead of 'tisící stý první'
+    (1111, "jedenáctistý jedenáctý"),  # thousand + hundred + teens, instead of 'tisící stý jedenáctý'
+    (1120, "jedenáctistý dvacátý"),  # thousand + hundred + twenties, instead of 'tisící stý dvacátý'
+    (1121, "jedenáctistý dvacátý první"),  # thousand + hundred + twenties + ones, instead of 'tisící stý dvacátý první'
+    # 200-999
+    (1200, "dvanáctistý"),  # thousand + hundreds, instead of 'tisící dvoustý'
+    (1201, "dvanáctistý první"),  # thousand + hundreds + ones, instead of 'tisící dvoustý první'
+    (1211, "dvanáctistý jedenáctý"),  # thousand + hundreds + teens, instead of 'tisící dvoustý jedenáctý'
+    (1220, "dvanáctistý dvacátý"),  # thousand + hundreds + twenties, instead of 'tisící dvoustý dvacátý'
+    (1221, "dvanáctistý dvacátý první"),  # thousand + hundreds + twenties + ones, instead of 'tisící dvoustý dvacátý první'
 )
 
 
@@ -137,7 +153,8 @@ TEST_CASES_ORDINAL_MILLIONS = (
 
 TEST_CASES_ORDINAL = (
     TEST_CASES_ORDINAL_UNDER_THOUSAND
-    + TEST_CASES_ORDINAL_1XXX
+    + TEST_CASES_ORDINAL_2XXX
+    + TEST_CASES_ORDINAL_001XXX_FRAGMENT_INTERFERENCE
     + TEST_CASES_ORDINAL_XXX000
     + TEST_CASES_ORDINAL_MILLIONS
 )

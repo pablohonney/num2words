@@ -84,7 +84,6 @@ THOUSANDS = {
     10: ("quintillion", "quintilliony", "quintillionů"),  # 10^30
 }
 
-
 ZERO_ORDINAL = ("nultý",)
 
 ORDINAL_FORM = 0
@@ -136,6 +135,16 @@ HUNDREDS_ORDINALS = {
     7: ("sedmistý", "sedmiset"),
     8: ("osmistý", "osmiset"),
     9: ("devítistý", "devítiset"),
+    # a special case of inter-fragment interference, these forms do not form compounds
+    11: ("jedenáctistý", None),
+    12: ("dvanáctistý", None),
+    13: ("třináctistý", None),
+    14: ("čtrnáctistý", None),
+    15: ("patnáctistý", None),
+    16: ("šestnáctistý", None),
+    17: ("sedmnáctistý", None),
+    18: ("osmnáctistý", None),
+    19: ("devatenáctistý", None),
 }
 
 THOUSANDS_ORDINALS = {
@@ -178,16 +187,58 @@ class OrdinalFragment(namedtuple('Fragment', 'n1 n2 n3 level chunk')):
             words.append(TWENTIES_ORDINALS[self.n2][form])
             words.append(ONES_ORDINALS[self.n1][form])
 
-        words = self.add_suffix(words)
+        words = self._add_thousands_suffix(words)
 
         return words
 
-    # concat words in higher-order fragments
-    def add_suffix(self, words):
-        if self.level > 0 and self.chunk != 0:
+    def _add_thousands_suffix(self, words):
+        if self.level > 0 and not self.is_empty():
             words.append(THOUSANDS_ORDINALS[self.level])
-            words = ["".join(words)]
+            words = ["".join(words)]  # concat (univerbate) words in higher-order fragments
         return words
+
+
+class TeenHundredthFragmentInterferenceRule:
+    """
+    Inter-fragment interference rule
+
+    001,100 would produce 'tisící stý' (English equivalent being 'thousandth hundredth')
+    00(1,100) should produce 'jedenáctistý' (English equivalent being 'eleven-hundredths')
+
+    Apply this rule only when the left fragment has no more significant digits. e.g. don't apply to 011,100 or 101,100
+    Apply this rule even when the right fragment has less significant digits. e.g. apply to 001,123
+
+    Fragment(0, 0, 1), Fragment([1-9], Any, Any) will produce TeenHundredOrdinalFragment(1[1-9]00), Fragment(0, Any, Any)
+    """
+    class TeenHundredOrdinalFragment:
+        """Special OrdinalFragment to represent the inter-fragment value"""
+
+        def __init__(self, left, right):
+            self.left = left
+            self.right = right
+
+        def to_words(self):
+            inter_fragment_teen = self.left.n1 * 10 + self.right.n3
+            word = HUNDREDS_ORDINALS[inter_fragment_teen][0]
+
+            return [word]
+
+        def is_empty(self):
+            return False
+
+    def apply(self, fragments):
+        if len(fragments) > 1:
+            fragments[1], fragments[0] = self._teen_hundred_pattern_matcher(fragments[1], fragments[0])
+        return fragments
+
+    def _teen_hundred_pattern_matcher(self, left, right):
+        if not left.n3 and not left.n2 and left.n1 == 1 and right.n3:
+            new_left = self.TeenHundredOrdinalFragment(left, right)
+            new_right = OrdinalFragment(right.n1, right.n2, 0, right.level, right.chunk)
+
+            return new_left, new_right
+        else:
+            return left, right
 
 
 class Num2Word_CZ(Num2Word_Base):
@@ -195,6 +246,10 @@ class Num2Word_CZ(Num2Word_Base):
         "CZK": (("koruna", "koruny", "korun"), ("halíř", "halíře", "haléřů")),
         "EUR": (("euro", "euro", "euro"), ("cent", "centy", "centů")),
     }
+
+    _ORDINAL_FRAGMENT_INTERFERENCE_RULES = [
+        TeenHundredthFragmentInterferenceRule()
+    ]
 
     def setup(self):
         self.negword = "mínus"
@@ -236,11 +291,12 @@ class Num2Word_CZ(Num2Word_Base):
             return ZERO_ORDINAL[0]
 
         fragment_chunks = list(splitbyx(str(number), 3))
-
         fragments = []
         for i, fragment_chunk in enumerate(fragment_chunks):
             level = len(fragment_chunks) - i - 1
             fragments.append(OrdinalFragment.build_fragment(level, fragment_chunk))
+
+        fragments = self._solve_fragment_interference(fragments)
 
         words = []
         for fragment in fragments:
@@ -250,6 +306,14 @@ class Num2Word_CZ(Num2Word_Base):
         output = " ".join(words)
 
         return output
+
+    # in some cases fragments may interfere with each other, solve this high-order interaction with interference rules
+    def _solve_fragment_interference(self, fragments):
+        fragments.reverse()
+        for fragment_interference_rule in self._ORDINAL_FRAGMENT_INTERFERENCE_RULES:
+            fragments = fragment_interference_rule.apply(fragments)
+        fragments.reverse()
+        return fragments
 
     def _int2word(self, n):
         if n == 0:
