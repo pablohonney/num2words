@@ -16,6 +16,7 @@
 # MA 02110-1301 USA
 
 from __future__ import unicode_literals
+from collections import namedtuple
 
 from .base import Num2Word_Base
 from .utils import get_digits, splitbyx
@@ -146,6 +147,49 @@ for level_, thousand_ in THOUSANDS.items():
         THOUSANDS_ORDINALS[level_] = thousand_[0].rstrip("a") + "tý"
 
 
+class OrdinalFragment(namedtuple('Fragment', 'n1 n2 n3 level chunk')):
+    """Represent a 3-digit fragment of the ordinal number"""
+
+    @staticmethod
+    def build_fragment(level, chunk):
+        return OrdinalFragment(*get_digits(chunk), level, chunk)
+
+    def is_empty(self):
+        return self.chunk == 0
+
+    def to_words(self):
+        words = []
+        last_two = self.n2 * 10 + self.n1
+
+        form = ORDINAL_FORM if self.level == 0 else COMPOUNDED_FORM
+
+        if self.n3 > 0:
+            words.append(HUNDREDS_ORDINALS[self.n3][form])
+
+        if last_two == 0:
+            pass
+        elif self.level > 0 and self.chunk == 1:  # 1000 gives thousandth, not one thousandth
+            pass
+        elif last_two < 20:  # ones and teens
+            words.append(ONES_ORDINALS[last_two][form])
+        elif self.n1 == 0:  # twenties
+            words.append(TWENTIES_ORDINALS[self.n2][form])
+        else:  # twenties + ones
+            words.append(TWENTIES_ORDINALS[self.n2][form])
+            words.append(ONES_ORDINALS[self.n1][form])
+
+        words = self.add_suffix(words)
+
+        return words
+
+    # concat words in higher-order fragments
+    def add_suffix(self, words):
+        if self.level > 0 and self.chunk != 0:
+            words.append(THOUSANDS_ORDINALS[self.level])
+            words = ["".join(words)]
+        return words
+
+
 class Num2Word_CZ(Num2Word_Base):
     CURRENCY_FORMS = {
         "CZK": (("koruna", "koruny", "korun"), ("halíř", "halíře", "haléřů")),
@@ -191,47 +235,21 @@ class Num2Word_CZ(Num2Word_Base):
         if number == 0:
             return ZERO_ORDINAL[0]
 
-        words = []
-        fragments = list(splitbyx(str(number), 3))
+        fragment_chunks = list(splitbyx(str(number), 3))
 
-        for i, fragment in enumerate(fragments):
-            level = len(fragments) - i - 1
-            fragment_words = self._fragment_to_ordinal(fragment, level=level)
-            if level > 0 and fragment != 0:
-                fragment_words.append(THOUSANDS_ORDINALS[level])
-                words.append("".join(fragment_words))
-            else:
-                words.extend(fragment_words)
+        fragments = []
+        for i, fragment_chunk in enumerate(fragment_chunks):
+            level = len(fragment_chunks) - i - 1
+            fragments.append(OrdinalFragment.build_fragment(level, fragment_chunk))
+
+        words = []
+        for fragment in fragments:
+            if not fragment.is_empty():
+                words.extend(fragment.to_words())
 
         output = " ".join(words)
 
         return output
-
-    # process fragments of 1-999
-    def _fragment_to_ordinal(self, last, level):
-        words = []
-
-        n1, n2, n3 = get_digits(last)
-        last_two = n2 * 10 + n1
-
-        form = ORDINAL_FORM if level == 0 else COMPOUNDED_FORM
-
-        if n3 > 0:
-            words.append(HUNDREDS_ORDINALS[n3][form])
-
-        if last_two == 0:
-            return words
-        elif level > 0 and last == 1:  # 1000 gives thousandth, not one thousandth
-            return words
-        elif last_two < 20:  # ones and teens
-            words.append(ONES_ORDINALS[last_two][form])
-        elif n1 == 0:  # twenties
-            words.append(TWENTIES_ORDINALS[n2][form])
-        else:  # twenties + ones
-            words.append(TWENTIES_ORDINALS[n2][form])
-            words.append(ONES_ORDINALS[n1][form])
-
-        return words
 
     def _int2word(self, n):
         if n == 0:
