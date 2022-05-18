@@ -202,25 +202,25 @@ class TeenHundredthFragmentInterferenceRule:
     """
     Inter-fragment interference rule
 
-    001,100 would produce 'tisící stý' (English equivalent being 'thousandth hundredth')
-    00(1,100) should produce 'jedenáctistý' (English equivalent being 'eleven-hundredths')
+    Without interferece 001,100 would produce 'tisící stý' (English equivalent being 'thousandth hundredth')
+    Instead 001,100 should produce 'jedenáctistý' (English equivalent being 'eleven-hundredth')
 
-    Apply this rule only when the left fragment has no more significant digits. e.g. don't apply to 011,100 or 101,100
-    Apply this rule even when the right fragment has less significant digits. e.g. apply to 001,123
+    Do not apply the rule when the second fragment has more significant digits. e.g. don't apply to 011,100 or 101,100
+    Apply the rule when the first fragment has less significant digits. e.g. apply to 001,123
 
-    Fragment(0, 0, 1), Fragment([1-9], Any, Any) will produce TeenHundredOrdinalFragment(1[1-9]00), Fragment(0, Any, Any)
+    Given first fragment Fragment([1-9], Any, Any) and second fragment Fragment(0, 0, 1)
+    The rule will produce first fragment Fragment(0, Any, Any) and second fragment TeenHundredOrdinalFragment(1[1-9]00)
     """
     class TeenHundredOrdinalFragment:
-        """Special OrdinalFragment to represent the inter-fragment value"""
+        """Special OrdinalFragment to represent the TeenHundredth value"""
 
-        def __init__(self, left, right):
-            self.left = left
-            self.right = right
+        def __init__(self, first, second):
+            self._first = first
+            self._second = second
 
         def to_words(self):
-            inter_fragment_teen = self.left.n1 * 10 + self.right.n3
+            inter_fragment_teen = self._first.n1 * 10 + self._second.n3
             word = HUNDREDS_ORDINALS[inter_fragment_teen][0]
-
             return [word]
 
         def is_empty(self):
@@ -228,17 +228,16 @@ class TeenHundredthFragmentInterferenceRule:
 
     def apply(self, fragments):
         if len(fragments) > 1:
-            fragments[1], fragments[0] = self._teen_hundred_pattern_matcher(fragments[1], fragments[0])
+            fragments[-1], fragments[-2] = self._apply_teen_hundredth_pattern(fragments[-1], fragments[-2])
         return fragments
 
-    def _teen_hundred_pattern_matcher(self, left, right):
-        if not left.n3 and not left.n2 and left.n1 == 1 and right.n3:
-            new_left = self.TeenHundredOrdinalFragment(left, right)
-            new_right = OrdinalFragment(right.n1, right.n2, 0, right.level, right.chunk)
-
-            return new_left, new_right
+    def _apply_teen_hundredth_pattern(self, first, second):
+        if (second.n3, second.n2, second.n1) == (0, 0, 1) and first.n3:
+            new_second = self.TeenHundredOrdinalFragment(second, first)
+            new_first = OrdinalFragment(first.n1, first.n2, 0, first.level, first.chunk)
+            return new_first, new_second
         else:
-            return left, right
+            return first, second
 
 
 class Num2Word_CZ(Num2Word_Base):
@@ -280,10 +279,6 @@ class Num2Word_CZ(Num2Word_Base):
             form = 2
         return forms[form]
 
-    # We try to keep the ordinals' structure as consistent as possible.
-    # Since the 0-999 are mostly represented in separate ordinals form we try to extend the same logic to higher order numbers.
-    # Thus for 20,000 we choose dvacátý tisící, not dvacetitisící.
-    # Yet this approach is explicitly wrong for 2,3 and 4 which always require the compounded form (dvou tisící, not druhý tisící).
     def to_ordinal(self, number):
         self.verify_ordinal(number)
 
@@ -307,12 +302,10 @@ class Num2Word_CZ(Num2Word_Base):
 
         return output
 
-    # in some cases fragments may interfere with each other, solve this high-order interaction with interference rules
+    # in some cases fragments may interfere with each other
     def _solve_fragment_interference(self, fragments):
-        fragments.reverse()
         for fragment_interference_rule in self._ORDINAL_FRAGMENT_INTERFERENCE_RULES:
             fragments = fragment_interference_rule.apply(fragments)
-        fragments.reverse()
         return fragments
 
     def _int2word(self, n):
