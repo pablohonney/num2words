@@ -156,7 +156,7 @@ for level_, thousand_ in THOUSANDS.items():
         THOUSANDS_ORDINALS[level_] = thousand_[0].rstrip("a") + "tý"
 
 
-class OrdinalFragment(namedtuple('Fragment', 'n1 n2 n3 level chunk')):
+class OrdinalFragment(namedtuple("Fragment", "n1 n2 n3 level chunk")):
     """Represent a 3-digit fragment of the ordinal number"""
 
     @staticmethod
@@ -177,7 +177,9 @@ class OrdinalFragment(namedtuple('Fragment', 'n1 n2 n3 level chunk')):
 
         if last_two == 0:
             pass
-        elif self.level > 0 and self.chunk == 1:  # 1000 gives thousandth, not one thousandth
+        elif (
+            self.level > 0 and self.chunk == 1
+        ):  # 1000 gives thousandth, not one thousandth
             pass
         elif last_two < 20:  # ones and teens
             words.append(ONES_ORDINALS[last_two][form])
@@ -194,7 +196,9 @@ class OrdinalFragment(namedtuple('Fragment', 'n1 n2 n3 level chunk')):
     def _add_thousands_suffix(self, words):
         if self.level > 0 and not self.is_empty():
             words.append(THOUSANDS_ORDINALS[self.level])
-            words = ["".join(words)]  # concat (univerbate) words in higher-order fragments
+            words = [
+                "".join(words)
+            ]  # concat (univerbate) words in higher-order fragments
         return words
 
 
@@ -211,6 +215,7 @@ class TeenHundredthFragmentInterferenceRule:
     Given first fragment Fragment([1-9], Any, Any) and second fragment Fragment(0, 0, 1)
     The rule will produce first fragment Fragment(0, Any, Any) and second fragment TeenHundredOrdinalFragment(1[1-9]00)
     """
+
     class TeenHundredOrdinalFragment:
         """Special OrdinalFragment to represent the TeenHundredth value"""
 
@@ -228,7 +233,9 @@ class TeenHundredthFragmentInterferenceRule:
 
     def apply(self, fragments):
         if len(fragments) > 1:
-            fragments[-1], fragments[-2] = self._apply_teen_hundredth_pattern(fragments[-1], fragments[-2])
+            fragments[-1], fragments[-2] = self._apply_teen_hundredth_pattern(
+                fragments[-1], fragments[-2]
+            )
         return fragments
 
     def _apply_teen_hundredth_pattern(self, first, second):
@@ -246,9 +253,7 @@ class Num2Word_CZ(Num2Word_Base):
         "EUR": (("euro", "euro", "euro"), ("cent", "centy", "centů")),
     }
 
-    _ORDINAL_FRAGMENT_INTERFERENCE_RULES = [
-        TeenHundredthFragmentInterferenceRule()
-    ]
+    _ORDINAL_FRAGMENT_INTERFERENCE_RULES = [TeenHundredthFragmentInterferenceRule()]
 
     def setup(self):
         self.negword = "mínus"

@@ -106,16 +106,40 @@ TEST_CASES_ORDINAL_2XXX = (
 TEST_CASES_ORDINAL_001XXX_FRAGMENT_INTERFERENCE = (
     # 100-199
     (1100, "jedenáctistý"),  # thousand + hundred, instead of 'tisící stý'
-    (1101, "jedenáctistý první"),  # thousand + hundred + ones, instead of 'tisící stý první'
-    (1111, "jedenáctistý jedenáctý"),  # thousand + hundred + teens, instead of 'tisící stý jedenáctý'
-    (1120, "jedenáctistý dvacátý"),  # thousand + hundred + twenties, instead of 'tisící stý dvacátý'
-    (1121, "jedenáctistý dvacátý první"),  # thousand + hundred + twenties + ones, instead of 'tisící stý dvacátý první'
+    (
+        1101,
+        "jedenáctistý první",
+    ),  # thousand + hundred + ones, instead of 'tisící stý první'
+    (
+        1111,
+        "jedenáctistý jedenáctý",
+    ),  # thousand + hundred + teens, instead of 'tisící stý jedenáctý'
+    (
+        1120,
+        "jedenáctistý dvacátý",
+    ),  # thousand + hundred + twenties, instead of 'tisící stý dvacátý'
+    (
+        1121,
+        "jedenáctistý dvacátý první",
+    ),  # thousand + hundred + twenties + ones, instead of 'tisící stý dvacátý první'
     # 200-999
     (1200, "dvanáctistý"),  # thousand + hundreds, instead of 'tisící dvoustý'
-    (1201, "dvanáctistý první"),  # thousand + hundreds + ones, instead of 'tisící dvoustý první'
-    (1211, "dvanáctistý jedenáctý"),  # thousand + hundreds + teens, instead of 'tisící dvoustý jedenáctý'
-    (1220, "dvanáctistý dvacátý"),  # thousand + hundreds + twenties, instead of 'tisící dvoustý dvacátý'
-    (1221, "dvanáctistý dvacátý první"),  # thousand + hundreds + twenties + ones, instead of 'tisící dvoustý dvacátý první'
+    (
+        1201,
+        "dvanáctistý první",
+    ),  # thousand + hundreds + ones, instead of 'tisící dvoustý první'
+    (
+        1211,
+        "dvanáctistý jedenáctý",
+    ),  # thousand + hundreds + teens, instead of 'tisící dvoustý jedenáctý'
+    (
+        1220,
+        "dvanáctistý dvacátý",
+    ),  # thousand + hundreds + twenties, instead of 'tisící dvoustý dvacátý'
+    (
+        1221,
+        "dvanáctistý dvacátý první",
+    ),  # thousand + hundreds + twenties + ones, instead of 'tisící dvoustý dvacátý první'
 )
 
 
