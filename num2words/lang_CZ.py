@@ -97,7 +97,7 @@ ONES_ORDINALS = {
     4: ("čtvrtý", "čtyr"),
     5: ("pátý", "pěti"),
     6: ("šestý", "šesti"),
-    7: ("sedmý", "siedmio"),
+    7: ("sedmý", "sedmi"),
     8: ("osmý", "osmi"),
     9: ("devátý", "devíti"),
     10: ("desátý", "deseti"),
