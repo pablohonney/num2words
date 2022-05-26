@@ -117,11 +117,11 @@ TWENTIES_ORDINALS = {
     2: ("dvacátý", "dvaceti"),
     3: ("třicátý", "třiceti"),
     4: ("čtyřicátý", "čtyřiceti"),
-    5: ("padesátý", "padeseti"),
-    6: ("šedesátý", "šedeseti"),
-    7: ("sedmdesátý", "sedmdeseti"),
-    8: ("osmdesátý", "osmdeseti"),
-    9: ("devadesátý", "devadeseti"),
+    5: ("padesátý", "padesáti"),
+    6: ("šedesátý", "šedesáti"),
+    7: ("sedmdesátý", "sedmdesáti"),
+    8: ("osmdesátý", "osmdesáti"),
+    9: ("devadesátý", "devadesáti"),
 }
 
 # (ORDINAL_FORM, COMPOUNDED_FORM)

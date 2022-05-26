@@ -149,12 +149,22 @@ TEST_CASES_ORDINAL_MILLIONS = (
     (10**12, "biliontý"),
 )
 
+TEST_CASES_ORDINAL_REGRESSION = (
+    # compounded tens in range 10-40 use the cardinal genitive form
+    (10 * 1000, "desetitisící"),
+    (40 * 1000, "čtyřicetitisící"),
+    # compounded tens in range 50-90 use the ordinal form
+    (50 * 1000, "padesátitisící"),
+    (90 * 1000, "devadesátitisící"),
+)
+
 TEST_CASES_ORDINAL = (
     TEST_CASES_ORDINAL_UNDER_THOUSAND
     + TEST_CASES_ORDINAL_2XXX
     + TEST_CASES_ORDINAL_001XXX_FRAGMENT_INTERFERENCE
     + TEST_CASES_ORDINAL_XXX000
     + TEST_CASES_ORDINAL_MILLIONS
+    + TEST_CASES_ORDINAL_REGRESSION
 )
 
 
