@@ -101,46 +101,20 @@ TEST_CASES_ORDINAL_2XXX = (
     (2220, "dvoutisící dvoustý dvacátý"),  # thousand + hundreds + twenties
     (2221, "dvoutisící dvoustý dvacátý první"),  # thousand + hundreds + twenties + ones
 )
-
-
 TEST_CASES_ORDINAL_001XXX_FRAGMENT_INTERFERENCE = (
     # 100-199
     (1100, "jedenáctistý"),  # thousand + hundred, instead of 'tisící stý'
-    (
-        1101,
-        "jedenáctistý první",
-    ),  # thousand + hundred + ones, instead of 'tisící stý první'
-    (
-        1111,
-        "jedenáctistý jedenáctý",
-    ),  # thousand + hundred + teens, instead of 'tisící stý jedenáctý'
-    (
-        1120,
-        "jedenáctistý dvacátý",
-    ),  # thousand + hundred + twenties, instead of 'tisící stý dvacátý'
-    (
-        1121,
-        "jedenáctistý dvacátý první",
-    ),  # thousand + hundred + twenties + ones, instead of 'tisící stý dvacátý první'
+    (1101, "jedenáctistý první"),  # thousand + hundred + ones, instead of 'tisící stý první'
+    (1111, "jedenáctistý jedenáctý"),  # thousand + hundred + teens, instead of 'tisící stý jedenáctý'
+    (1120, "jedenáctistý dvacátý"),  # thousand + hundred + twenties, instead of 'tisící stý dvacátý'
+    (1121, "jedenáctistý dvacátý první"),  # thousand + hundred + twenties + ones, instead of 'tisící stý dvacátý první'
     # 200-999
     (1200, "dvanáctistý"),  # thousand + hundreds, instead of 'tisící dvoustý'
-    (
-        1201,
-        "dvanáctistý první",
-    ),  # thousand + hundreds + ones, instead of 'tisící dvoustý první'
-    (
-        1211,
-        "dvanáctistý jedenáctý",
-    ),  # thousand + hundreds + teens, instead of 'tisící dvoustý jedenáctý'
-    (
-        1220,
-        "dvanáctistý dvacátý",
-    ),  # thousand + hundreds + twenties, instead of 'tisící dvoustý dvacátý'
-    (
-        1221,
-        "dvanáctistý dvacátý první",
-    ),  # thousand + hundreds + twenties + ones, instead of 'tisící dvoustý dvacátý první'
-)
+    (1201, "dvanáctistý první"),  # thousand + hundreds + ones, instead of 'tisící dvoustý první'
+    (1211, "dvanáctistý jedenáctý"),  # thousand + hundreds + teens, instead of 'tisící dvoustý jedenáctý'
+    (1220, "dvanáctistý dvacátý"),  # thousand + hundreds + twenties, instead of 'tisící dvoustý dvacátý'
+    (1221, "dvanáctistý dvacátý první"),  # thousand + hundreds + twenties + ones, instead of 'tisící dvoustý dvacátý první'
+)  # fmt: skip
 
 
 # Number fragments over thousands form open composites, each component is ordinal
@@ -175,12 +149,22 @@ TEST_CASES_ORDINAL_MILLIONS = (
     (10**12, "biliontý"),
 )
 
+TEST_CASES_ORDINAL_REGRESSION = (
+    # compounded tens in range 10-40 use the cardinal genitive form
+    (10 * 1000, "desetitisící"),
+    (40 * 1000, "čtyřicetitisící"),
+    # compounded tens in range 50-90 use the ordinal form
+    (50 * 1000, "padesátitisící"),
+    (90 * 1000, "devadesátitisící"),
+)
+
 TEST_CASES_ORDINAL = (
     TEST_CASES_ORDINAL_UNDER_THOUSAND
     + TEST_CASES_ORDINAL_2XXX
     + TEST_CASES_ORDINAL_001XXX_FRAGMENT_INTERFERENCE
     + TEST_CASES_ORDINAL_XXX000
     + TEST_CASES_ORDINAL_MILLIONS
+    + TEST_CASES_ORDINAL_REGRESSION
 )
 
 
