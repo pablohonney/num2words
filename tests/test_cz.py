@@ -150,6 +150,8 @@ TEST_CASES_ORDINAL_MILLIONS = (
 )
 
 TEST_CASES_ORDINAL_REGRESSION = (
+    # tří with long i
+    (300, "třístý"),
     # compounded tens in range 10-40 use the cardinal genitive form
     (10 * 1000, "desetitisící"),
     (40 * 1000, "čtyřicetitisící"),
