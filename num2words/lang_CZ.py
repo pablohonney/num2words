@@ -128,7 +128,7 @@ TWENTIES_ORDINALS = {
 HUNDREDS_ORDINALS = {
     1: ("stý", "sto"),
     2: ("dvoustý", "dvouset"),
-    3: ("třistý", "třiset"),
+    3: ("třístý", "třiset"),
     4: ("čtyřstý", "čtyřset"),
     5: ("pětistý", "pětiset"),
     6: ("šestistý", "šestiset"),
